@@ -18,7 +18,7 @@ The revised Stage 3 preserves public/private auctions, automatic highest-bid win
 
 All five current technical diagrams are Mermaid code inside Markdown: one architecture diagram, one ERD and three sequence diagrams. UI mockups remain in the existing Figma files referenced by the original documents.
 
-Stage 1 and Stage 2 are preserved as source history. Earlier payment, escrow, transaction and delivery ideas are not additions to the current MVP. The unresolved bank sandbox operation, camel/plate fields and deployment host remain explicitly recorded in Stage 3.
+Stage 1 and Stage 2 are preserved as source history. Earlier payment, escrow, transaction and delivery ideas are not additions to the current MVP. The unresolved bank sandbox operation and deployment host, plus proposed camel/plate fields for team review, are explicitly recorded in Stage 3.
 
 Each team member works in a task branch, opens a pull request, and has another member review it before integration. Docker Compose runs the application and database; GitHub stores and reviews the code.
 
