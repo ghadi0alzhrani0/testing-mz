@@ -6,4 +6,4 @@ The five required diagrams are editable Mermaid source blocks in the report and 
 
 [The previous Stage 3 report](Original_Report.MD) is preserved for comparison. It describes the older design and is not the current technical proposal.
 
-The bank API contract and category-specific fields remain unresolved. Runtime verification and Manual QA review are pending; this is a personal test copy for review.
+The bank API contract remains unresolved. Proposed camel/plate fields are documented for team review. Runtime verification and Manual QA review are pending; this is a personal test copy for review.
