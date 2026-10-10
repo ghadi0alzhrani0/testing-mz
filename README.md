@@ -24,6 +24,7 @@ Each team member works in a task branch, opens a pull request, and has another m
 ## Team
 
 - Ghadi Alzhrani
-- Abeer Alsayari
+- Abeer Alsayari 
 - Tala Alhudhaybi
 - Aseel Alzhrani
+😜
