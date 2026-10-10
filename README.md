@@ -12,7 +12,6 @@ This repository is Ghadi's private working copy of [Mezyad](https://github.com/g
 | Stage 2 — original project charter | [Report](Stage_2/Report.MD) |
 | Stage 3 — revised technical proposal | [Report with five Mermaid diagrams](Stage_3/Report.MD) |
 | Stage 3 — proposed MySQL schema | [schema.sql](Stage_3/schema.sql) |
-| Stage 3 — original report for comparison | [Original report](Stage_3/Original_Report.MD) |
 
 The revised Stage 3 preserves public/private auctions, automatic highest-bid winning, live updates and anti-sniping. It proposes Python/Flask, MySQL, HTML/CSS/JavaScript and Docker Compose for student implementation.
 
