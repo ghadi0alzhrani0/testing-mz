@@ -9,7 +9,7 @@
 
 This document translates the Mezyad Project Charter into a plan for implementation. It covers user stories, mockups, architecture, components and classes, database relationships, sequences, API contracts, source control, testing, deployment, and technical justifications. It incorporates the team's requirements and the mentor feedback summary supplied by Ghadi. The application has not been implemented or tested in this repository.
 
-[Stage 1](../Stage_1/Report.MD) records the research and selection of Mezyad. [Stage 2](../Stage_2/Report.MD) is the scope, objectives, responsibilities, and schedule baseline for Stage 3. Both documents remain unchanged. The earlier Stage 3 report is retained as [Original_Report.MD](Original_Report.MD) for comparison.
+[Stage 1](../Stage_1/Report.MD) records the research and selection of Mezyad. [Stage 2](../Stage_2/Report.MD) is the scope, objectives, responsibilities, and schedule baseline for Stage 3. Both documents remain unchanged. Earlier Stage 3 versions remain available in Git history.
 
 The workflow remains:
 
@@ -140,7 +140,7 @@ The browser renders HTML/CSS/JavaScript and sends HTTPS requests to Flask. Flask
 
 Flask serves Jinja pages and JSON APIs. Bid submission uses POST; Flask-SocketIO publishes live price, time, and closure updates after a successful database commit. A GET snapshot recovers state after a connection interruption. The server owns price, timing, and winner decisions.
 
-The diagram follows standard architectural practices: named responsibilities, technology labels, and annotated communication arrows. C4 references inform this presentation, but the task does not require every C4 level. Docker and GitHub belong to the development/deployment plan and do not sit between a user request and the application.
+The diagram follows standard architectural practices: named responsibilities, technology labels, and annotated communication arrows. Docker and GitHub belong to the development/deployment plan and do not sit between a user request and the application.
 
 ### Architecture Diagram
 
@@ -851,7 +851,7 @@ The task requires a Manual QA review request when the Stage 3 deliverable is rea
 | Docker and member branches | Compose plan plus task branches, PR review, and integration process |
 | Required diagrams only | Exactly five Mermaid diagrams; other plans use tables/text |
 | Preserve stage continuity | Stage 2 controls product scope; changes simplify the technical implementation rather than replacing the project |
-| English repository work and clear commits | Report, schema comments, diagram labels, and commit descriptions use English |
+| English repository work and clear commits | Report, schema comments, and diagram labels use English; commits have clear English titles without an extended description |
 
 These mechanisms support the team's stated requirements; they are not a formal religious approval of every contract detail. The team must understand why each tool is used, how a request travels, what is stored, and how a failure affects the workflow. Two members should be able to explain a new library before merging it.
 
@@ -871,20 +871,6 @@ The first learning exercise should demonstrate two browsers, two bids, an auctio
 | Implementation and runtime QA | Planned for Stage 4; no passing application tests claimed |
 | Holberton Manual QA | Required; not requested/completed here |
 
-The test repository retains the imported project and Git history. Stage 1 and Stage 2 are unchanged. The current Stage 3 proposal replaces the technical approach, while Original_Report.MD identifies the prior design for comparison. Any future change to a required Charter feature must be a documented team/mentor scope decision rather than an undocumented omission.
+The test repository retains the imported project and Git history. Stage 1 and Stage 2 are unchanged. The current Stage 3 proposal replaces the technical approach; earlier versions remain in Git history. Any future change to a required Charter feature must be a documented team/mentor scope decision rather than an undocumented omission.
 
 The timeline remains Stage 3 documentation in Weeks 4–5, Stage 4 development in Weeks 6–10, and Stage 5 testing/closure in Weeks 11–12. This report is ready for technical team review; unresolved external access is reported honestly, not filled with an invented API contract.
-
-## Official References
-
-- [GitHub: Creating diagrams](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams) — Mermaid in Markdown.
-- [Mermaid ER diagrams](https://mermaid.js.org/syntax/entityRelationshipDiagram.html) and [Sequence diagrams](https://mermaid.js.org/syntax/sequenceDiagram.html) — cardinality and sequence syntax.
-- [C4 container diagrams](https://c4model.com/diagrams/container) and [Notation](https://c4model.com/diagrams/notation) — clear responsibility, technology, and relationship labels; a C4 container does not mean a Docker container.
-- [Microsoft: Common web application architectures](https://learn.microsoft.com/en-gb/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures) — layered organization within one deployed application; the general pattern is used, not ASP.NET.
-- [Flask project layout](https://flask.palletsprojects.com/en/stable/tutorial/layout/) and [Templates](https://flask.palletsprojects.com/en/stable/tutorial/templates/) — route/template organization.
-- [SQLAlchemy Session basics](https://docs.sqlalchemy.org/en/20/orm/session_basics.html) — transaction/session boundaries and a session per thread.
-- [MySQL locking reads](https://dev.mysql.com/doc/refman/8.4/en/innodb-locking-reads.html) — transactional row locking.
-- [Flask-SocketIO deployment](https://flask-socketio.readthedocs.io/en/latest/deployment.html) — threaded single-worker deployment and the implications of multiple servers.
-- [Docker Compose application model](https://docs.docker.com/compose/intro/compose-application-model/) — services, networks, and volumes.
-- [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) — static hosting boundary.
-- [International Islamic Fiqh Academy auction resolution](https://iifa-aifi.org/ar/1958.html) — general auction principles and prohibition of artificial bidding; not a certification of this implementation.

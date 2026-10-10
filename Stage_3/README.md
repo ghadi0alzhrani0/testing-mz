@@ -6,6 +6,6 @@ Read [Report.MD](Report.MD) for the complete English technical proposal. It cove
 
 The five required diagrams are editable Mermaid source blocks that render on GitHub: one architecture diagram, one ERD, and three sequence diagrams. The proposed nine-table MySQL DDL is [schema.sql](schema.sql). UI mockups remain in the existing Figma references.
 
-[Original_Report.MD](Original_Report.MD) preserves the earlier Stage 3 design for comparison; it is not the current technical proposal.
+Earlier Stage 3 versions remain in Git history. The files in this folder describe the current technical proposal.
 
 The bank API contract is unresolved because access and an operation are not available. Proposed camel/plate fields need team/mockup review. Runtime tests and the required Holberton Manual QA review are pending. This is a private test copy for review.
