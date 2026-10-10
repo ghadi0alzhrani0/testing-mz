@@ -100,7 +100,7 @@ The existing interface is Arabic and right-to-left. Documentation is in English.
 
 ### Figma Prototype Flows
 
-The existing Arabic, right-to-left prototype includes the following seven user journeys. Sample assets identify the prototype scenarios; the application applies the same auction rules across all categories.
+The prototype includes the following seven user journeys. Sample assets identify the prototype scenarios; the application applies the same auction rules across all categories.
 
 | Flow | Experience illustrated |
 |---|---|
