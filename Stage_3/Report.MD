@@ -2,38 +2,23 @@
 
 **Project:** Mezyad — High-Value Asset Auction Platform  
 **Team:** Abeer Al-Saiari, Ghadi Al-Zahrani, Aseel Al-Zahrani, Tala Al-Hudaibi  
-**Level:** Holberton Novice — four team members  
-**Version:** 10 October 2026 — revised technical proposal for team review
+**Version:** 10 October 2026
 
 ## Purpose and MVP Baseline
 
-This document translates the Mezyad Project Charter into a plan for implementation. It covers user stories, mockups, architecture, components and classes, database relationships, sequences, API contracts, source control, testing, deployment, and technical justifications. It incorporates the team's requirements and the mentor feedback summary supplied by Ghadi. The application has not been implemented or tested in this repository.
+This document translates the Mezyad Project Charter into a plan for implementation. It covers user stories, mockups, architecture, components and classes, database relationships, sequences, API contracts, source control, testing, deployment, and technical justifications.
 
-[Stage 1](../Stage_1/Report.MD) records the research and selection of Mezyad. [Stage 2](../Stage_2/Report.MD) is the scope, objectives, responsibilities, and schedule baseline for Stage 3. Both documents remain unchanged. Earlier Stage 3 versions remain available in Git history.
+The project scope follows the [Project Charter](../Stage_2/Report.MD).
 
 The workflow remains:
 
 Registration / Login → Seller Listing and Asset Information → Administrator Review → Public or Private Auction → Bid Commitment with a Saudi Open Banking Sandbox Interaction → Live Bidding and Anti-Sniping → Automatic Closure → Highest-Bid Winner and Auction Result
 
-The sandbox interaction supports Bid Commitment; it is not a separate business stage. The MVP ends at the auction result. Payments, escrow, settlement, invoices, handover, delivery, and paid bidding attempts are outside the Stage 2 scope. The existing UI covers vehicles, real estate, camels, and vehicle plates. The same categories must appear in the interface, API, and test data.
+The sandbox interaction supports Bid Commitment; it is not a separate business stage. The MVP ends at the auction result. Payments, escrow, settlement, invoices, handover, delivery, and paid bidding attempts are outside the MVP scope. The existing UI covers vehicles, real estate, camels, and vehicle plates. The same categories must appear in the interface, API, and test data.
 
-### Deliverable Mapping
+### MVP Requirements
 
-| Stage 3 task | Document section |
-|---|---|
-| Task 0 — User Stories and Mockups | Section 1: priorities, acceptance criteria, and screen mapping |
-| Task 1 — System Architecture | Section 2: responsibilities, technologies, data flow, and architecture diagram |
-| Task 2 — Components, Classes, and Database | Sections 3–4: classes, UI components, ERD, and SQL schema |
-| Task 3 — High-Level Sequence Diagrams | Section 5: three critical interactions |
-| Task 4 — External and Internal APIs | Section 6: methods, paths, input/output, events, and external dependency status |
-| Task 5 — SCM and QA | Sections 7–8: Git, Docker, deployment, testing, and Manual QA |
-| Task 6 — Complete Technical Documentation | Sections 9–10: justifications and delivery status |
-
-There are exactly five technical diagrams: one architecture diagram, one ERD, and three sequence diagrams. They are Mermaid source blocks in this report. Classes, Docker, SCM, and QA are documented through tables and text. Figma remains the UI mockup reference.
-
-### Continuity with Stage 2
-
-| Stage 2 requirement | Stage 3 implementation plan | Verification |
+| Requirement | Implementation plan | Verification |
 |---|---|---|
 | Registration, login, and three roles | User model, auth routes, server authorization | Authentication and role tests |
 | Listings, category-specific information, and images | Item, Category, ItemImage, and ListingForm | Complete data and image checks |
@@ -49,11 +34,11 @@ There are exactly five technical diagrams: one architecture diagram, one ERD, an
 | Admin auction-status monitoring | AuctionMonitoringPanel and admin auction list | ADMIN-only read access; no manual winner selection |
 | Shared Docker environment and team review | Compose, task branches, pull requests, and QA | Restart test and peer review |
 
-The SMART objectives remain unchanged: the auction core works with at least two users by Week 9; the complete public and private workflow, including commitment, bank integration, and the assistant, works by Week 10 without manual database changes during the demonstration; testing results are recorded by Week 12. A seeded commitment fixture can test bidding, but does not satisfy the end-to-end sandbox objective.
+The project milestones are: the auction core works with at least two users by Week 9; the complete public and private workflow, including commitment, bank integration, and the assistant, works by Week 10 without manual database changes during the demonstration; testing results are recorded by Week 12. A seeded commitment fixture can test bidding, but does not satisfy the end-to-end sandbox objective.
 
-The technical changes from the previous Stage 3 proposal are Flask instead of Express, MySQL instead of PostgreSQL, a database transaction and auction-row lock instead of Redis coordination, and Mermaid diagrams in the repository. These change implementation choices while retaining the Charter's product scope. A 60-second extension, one role per account, and one auction per item are explicit MVP design proposals for review, not requirements attributed to Stage 2.
+The implementation uses Flask, MySQL, database transactions and auction-row locks. Technical diagrams use Mermaid. The proposed MVP rules include a 60-second extension window, one role per account, and one auction per item.
 
-## 1. User Stories and Mockups — Task 0
+## 1. User Stories and Mockups
 
 ### Prioritized User Stories
 
@@ -76,7 +61,7 @@ The technical changes from the previous Stage 3 proposal are Flask instead of Ex
 | US15 | Should | As a user, I want invalid fields highlighted beside their validation messages, so that I can correct input more easily. |
 | — | Won't | Online payments, escrow, invoices, delivery, paid bidding attempts, distributed infrastructure, and external generative AI are outside this MVP. |
 
-Every Charter feature is Must, including all six assistant functions and the bank integration. Implementing these after the auction core follows the Stage 2 schedule; it does not make them optional. Should and Could describe improvements after the required workflow.
+Every Charter feature is Must, including all six assistant functions and the bank integration. Implementing these after the auction core follows the project schedule; it does not make them optional. Should and Could describe improvements after the required workflow.
 
 ### Acceptance Criteria
 
@@ -100,7 +85,7 @@ Every Charter feature is Must, including all six assistant functions and the ban
 
 ### Mockups and Screen Mapping
 
-The existing interface is Arabic and right-to-left. Documentation is in English. The mockup references are [Figma UI Prototype](https://www.figma.com/proto/mbc0Qc5e0hR8dIaqQjbMMN/Mezyad-1?node-id=2-2&starting-point-node-id=2%3A2) and [Figma Make Prototype](https://www.figma.com/make/kPPjEPSCp5baGlCi8Lz2o4/Mezyad-1?t=Z7jnPTxHHkYSNbgS-20&fullscreen=1). These are the existing links documented in the original report; this revision does not claim to have edited them.
+The existing interface is Arabic and right-to-left. Documentation is in English. The mockup references are [Figma UI Prototype](https://www.figma.com/proto/mbc0Qc5e0hR8dIaqQjbMMN/Mezyad-1?node-id=2-2&starting-point-node-id=2%3A2) and [Figma Make Prototype](https://www.figma.com/make/kPPjEPSCp5baGlCi8Lz2o4/Mezyad-1?t=Z7jnPTxHHkYSNbgS-20&fullscreen=1). The UI prototype shows the screens and user journeys; the Make prototype provides an interactive website preview.
 
 | Main screen | Components and interactions | Stories |
 |---|---|---|
@@ -113,7 +98,21 @@ The existing interface is Arabic and right-to-left. Documentation is in English.
 | Single auction page | Details, private access, commitment, bid form/history, timer, assistant, and result | US06–US10/US12 |
 | Result within auction page | Won/lost/no-bids state; bidding controls disabled after closure | US09 |
 
-The original prototype documents seven scenarios: Browse/Bid/Win, Outbid/Did Not Win, Submit/Approve/Publish, Listing Returned for Revision, Create/Join Private Auction, Using the Assistant, and Closed Without Bids. Keep these scenarios when reviewing the screens. If any screen suggests manual winner selection, revise it to show the automatic highest-bid result. A technical ERD does not replace screen mockups.
+### Figma Prototype Flows
+
+The existing Arabic, right-to-left prototype includes the following seven user journeys. Sample assets identify the prototype scenarios; the application applies the same auction rules across all categories.
+
+| Flow | Experience illustrated |
+|---|---|
+| **01 — Browse, Bid & Win** | Browsing from the homepage to the Porsche Carrera GT auction, account creation or sign-in, Bid Commitment, bid submission, a time-extension state, auction closure, and the winning result. |
+| **02 — Outbid & Did Not Win** | Participating in the Ferrari F40 auction, viewing an outbid state, and seeing the final result when another bidder wins. |
+| **03 — Submit, Approve & Publish a Listing** | The Villa Hittin listing journey, including asset details and photographs, submission, administrator review and approval, auction setup, and the scheduled-auction view. |
+| **04 — Listing Returned for Revision** | The Plate NJD 1 listing scenario, including administrator feedback, seller updates to details and photographs, resubmission, and review and approval states. |
+| **05 — Create & Join a Private Auction** | The Villa Al Malqa private-auction scenario, including auction setup, access-code entry, Bid Commitment, auction details, bid submission, and result states. |
+| **06 — Using the Auction Assistant** | The bidder's public-auction search assistance, auction activity summary, bidding activity insights, and auction summary, together with the seller's listing title and completeness suggestions. |
+| **07 — Auction Closed Without Bids** | Administrator auction monitoring and the Camel Rahoul result, showing an auction that closes without accepted bids or a winner. |
+
+The winning state displays the highest accepted bid at the final deadline. A private-auction flow requires a valid access code and a separate completed Bid Commitment before bidding. A closed auction without bids displays no winner.
 
 ### Shared Business Rules
 
@@ -121,7 +120,7 @@ The original prototype documents seven scenarios: Browse/Bid/Win, Outbid/Did Not
 2. Listings move from PENDING_REVIEW to APPROVED or REJECTED. Creating the record and uploading images are separate requests; incomplete records do not enter the admin review list.
 3. The seller may edit a pending or rejected listing. Resubmission clears reviewer fields and returns it to PENDING_REVIEW. Approved or published asset information cannot change behind bidders.
 4. Only the seller who owns an APPROVED item creates its auction. The proposed MVP allows zero or one auction per item; re-auctioning the same item is deferred. This is enforced by UNIQUE(item_id).
-5. A PRIVATE auction uses a hashed access code. The seller shares the link and code outside the platform, as specified in Stage 2. Validating the code creates a user–auction access grant.
+5. A PRIVATE auction uses a hashed access code. The seller shares the link and code outside the platform, as defined in the Project Charter. Validating the code creates a user–auction access grant.
 6. Private authorization covers the auction, item, images, assistant data, and live-update room. The owner and ADMIN retain access for their work.
 7. Bid Commitment is required for both public and private bidding and is separate from a private grant. It is a participation checkpoint, not proof of funds or guaranteed seriousness; the actual bank operation remains unresolved.
 8. The first bid must be at least starting_price. Every later bid must be at least the highest recorded amount plus minimum_increment. Equal recorded amounts are not accepted.
@@ -130,7 +129,7 @@ The original prototype documents seven scenarios: Browse/Bid/Win, Outbid/Did Not
 11. A closed auction with no bids stores a result with winning_bid_id=NULL. Bids and results cannot be edited or deleted through the MVP API.
 12. Listings must present truthful information and clear rules. The seller cannot bid on the asset they are selling. Do not implement fake bids, paid attempts, or automatic artificial price increases.
 
-## 2. System Architecture — Task 1
+## 2. System Architecture
 
 ### Architecture Approach
 
@@ -154,7 +153,7 @@ flowchart LR
         db[("MySQL / InnoDB: persistent records, constraints and transactions")]
     end
 
-    bank["Bank sandbox: Stage 2 dependency; operation and access pending"]
+    bank["Bank sandbox: Operation and access pending"]
 
     users -->|Uses the website| browser
     browser -->|Pages and API requests: HTTPS| app
@@ -175,7 +174,7 @@ This is a limited student deployment. Adding workers or application replicas req
 
 The Smart Auction Assistant remains six lightweight functions implemented through rules and queries. It is not a chatbot, price-prediction model, or external AI integration.
 
-## 3. Components and Classes — Task 2
+## 3. Components and Classes
 
 ### Backend Classes
 
@@ -196,7 +195,7 @@ The nine model classes match the nine tables. Roles are values in User, not Sell
 
 ### File Organization
 
-This is a Stage 4 implementation plan, not a claim that these application files already exist.
+The application is organized as follows:
 
 | Planned location | Responsibility |
 |---|---|
@@ -232,7 +231,7 @@ These are HTML/JavaScript UI sections, not a requirement to use React.
 
 Price, timer, bid form, history, assistant, and result stay on the same auction page. The UI does not increase the displayed authoritative price before confirmation. After an interruption it reloads the snapshot from the server.
 
-## 4. Database Design — Task 2
+## 4. Database Design
 
 ### Schema and Table Responsibilities
 
@@ -386,7 +385,7 @@ current_price is an intentional derived value for display. It is updated with th
 
 category_fields is a small JSON object containing descriptive asset properties only. Relationships, owner, bids, prices, and results remain relational columns. This avoids a large category taxonomy for four simple categories; complex category-specific search would require reassessing the design.
 
-Vehicle and property fields come from Stage 2. Camel and plate fields below are simple proposals to review against the existing screens, not invented claims about the current prototype.
+Vehicle and property fields follow the Project Charter. Camel and plate fields below are simple proposals to review against the existing screens, not invented claims about the current prototype.
 
 | Category code | Required category_fields | Optional fields and validation |
 |---|---|---|
@@ -397,7 +396,7 @@ Vehicle and property fields come from Stage 2. Camel and plate fields below are 
 
 Reject unknown category keys. Do not repeat the property's location in JSON. Asset descriptions may be Arabic in the application; the technical document and code identifiers remain English.
 
-## 5. High-Level Sequence Diagrams — Task 3
+## 5. High-Level Sequence Diagrams
 
 ### Critical Use Cases
 
@@ -533,7 +532,7 @@ sequenceDiagram
     Note over timer,app: An extension postpones closing, restart checks overdue auctions again.
 ```
 
-## 6. External and Internal APIs — Task 4
+## 6. External and Internal APIs
 
 ### Shared API Conventions
 
@@ -615,7 +614,7 @@ Create an item:
 
 The server assigns the seller and PENDING_REVIEW state. Upload the image after creating Item; the review queue checks completeness. Approve with `{ "decision": "APPROVED", "notes": "" }`, or reject with `{ "decision": "REJECTED", "notes": "Explain the missing information." }`.
 
-Stage 2 includes price and times among seller inputs. They are stored on Auction and entered in auction setup after approval, as in the existing prototype. This separates asset information from auction rules without removing those seller inputs.
+The seller provides the starting price and auction times. They are stored on Auction and entered in auction setup after approval, as in the existing prototype. This separates asset information from auction rules without removing those seller inputs.
 
 Create a private auction:
 
@@ -689,7 +688,7 @@ All values come from existing data or the seller's draft. There is no pricing pr
 
 | Dependency | Purpose and choice | Actual status |
 |---|---|---|
-| Saudi Open Banking sandbox: SABB primary candidate, Al Rajhi backup | Required Stage 2 supporting integration inside Bid Commitment, using test data only | Ghadi confirmed on 10 October that access and a specific operation are not available |
+| Saudi Open Banking sandbox: SABB primary candidate, Al Rajhi backup | Supporting integration inside Bid Commitment, using test data only | Access and a supported operation are not yet available |
 | Figma | Existing UI design/reference | Design tool, not called during auction runtime |
 | GitHub and Docker | Source control/review and reproducible execution | Development tools, not financial APIs or winner selectors |
 
@@ -697,9 +696,9 @@ The bank's actual method/path, authentication, required permissions, request, re
 
 Until configured, POST commitment returns 503 BANK_SANDBOX_NOT_CONFIGURED and does not create COMMITTED. A COMMITTED fixture in a test database may exercise bidding tests, but is not evidence of bank integration and does not satisfy the Week 10 objective. After selecting the operation, a timeout/failure must not permit bidding. Do not call the bank while holding the bid transaction lock.
 
-This is a sandbox integration only: no production banking data, payment, deposit, escrow, or money transfer. Reading a test account does not by itself prove funds or seriousness. If the required operation is unavailable, record a scope decision with the mentor and update the approved documents together; this revision does not silently remove the requirement.
+This is a sandbox integration only: no production banking data, payment, deposit, escrow, or money transfer. Reading a test account does not by itself prove funds or seriousness. The supported operation and its effect on commitment must be confirmed before implementation.
 
-## 7. SCM, Docker, and Deployment — Task 5
+## 7. SCM, Docker, and Deployment
 
 ### Source Control Process
 
@@ -713,7 +712,7 @@ development → task branch → small commits → local Docker/testing → push 
 | development | Integration of completed tasks |
 | `feature/<member>-<task>` or `fix/<task>` | One focused task or correction; merged through a PR |
 
-Example task branches are feature/ghadi-auction-page, feature/aseel-auth, feature/tala-bidding, and feature/abeer-data-model. They illustrate naming, not a replacement for the Stage 2 responsibility assignments. A member may create multiple task branches; a branch is not a permanent private copy of all their work.
+Example task branches are feature/ghadi-auction-page, feature/aseel-auth, feature/tala-bidding, and feature/abeer-data-model. They illustrate naming, not a replacement for the team responsibility assignments. A member may create multiple task branches; a branch is not a permanent private copy of all their work.
 
 1. Update local development and create the task branch.
 2. Implement and update affected API/documentation; verify locally with Docker.
@@ -723,11 +722,11 @@ Example task branches are feature/ghadi-auction-page, feature/aseel-auth, featur
 6. Resolve review comments and conflicts in the task branch; rerun affected checks, then merge.
 7. Review a release PR to main and deploy the same version first to staging.
 
-Do not force-push main/development. Track implementation tasks as small GitHub Issues with an owner and acceptance criteria. The initial private test-repository copy and documentation upload are setup commits, not evidence that this future implementation workflow is already configured.
+Do not force-push main/development. Track implementation tasks as small GitHub Issues with an owner and acceptance criteria. 
 
 ### Existing Team Responsibilities
 
-These remain the primary areas defined in Stage 2, with cross-review and flexibility.
+Primary responsibilities are shared, with peer review across areas.
 
 | Area | Members |
 |---|---|
@@ -751,7 +750,7 @@ Docker keeps the four members' development environments consistent. It does not 
 | Startup | Wait for database readiness, run documented migrations once, then create test data where appropriate |
 | Configuration | .env.example lists variable names; real .env, secrets, uploaded images, and database files are excluded from Git |
 
-Planned Stage 4 files are Dockerfile, compose.yaml, requirements.txt, .env.example, .gitignore, and migrations. They are not implemented or running in this documentation-only repository. The local start command will be `docker compose up --build`. The database port normally stays within the Compose network. Do not use down -v on an environment whose data must be preserved.
+The implementation files are Dockerfile, compose.yaml, requirements.txt, .env.example, .gitignore, and migrations. They are not implemented or running in this documentation-only repository. The local start command will be `docker compose up --build`. The database port normally stays within the Compose network. Do not use down -v on an environment whose data must be preserved.
 
 schema.sql proposes the initial structure; after implementation starts, use reviewed migrations for changes. Seeded users/assets support repeatable tests; do not seed production credentials or test commitments into production.
 
@@ -767,9 +766,9 @@ The deployment host and budget are not selected. Plan a manual, documented relea
 | Production | Deploy the same application version with separate secrets/data and HTTPS; check health and core flow |
 | Rollback | Restore previous image if schema is compatible; otherwise follow the migration/backup recovery plan |
 
-Plan GET /health with no input: 200 {"status":"ok"} when the app/database are ready, and 503 when unavailable, without secrets. Test state-changing flows in staging; production smoke checks use read-only checks or a clearly designated demo auction. Do not claim a deployed pipeline or passing health check before implementation. GitHub Actions may be added after the team understands its tests; it is not required to build this MVP.
+Plan GET /health with no input: 200 {"status":"ok"} when the app/database are ready, and 503 when unavailable, without secrets. Test state-changing flows in staging; production smoke checks use read-only checks or a clearly designated demo auction. GitHub Actions may be added after the team understands its tests; it is not required to build this MVP.
 
-## 8. QA Strategy and Manual Review — Task 5
+## 8. Quality Assurance Plan
 
 ### Testing Strategy
 
@@ -779,12 +778,12 @@ Plan GET /health with no input: 200 {"status":"ok"} when the app/database are re
 | Integration | FKs, cross-auction result rejection, roles/ownership, resubmission, commitment | pytest, Flask test client, separate MySQL test database |
 | API | Inputs, outputs, response statuses, matching/conflicting retry IDs | Postman and Flask test client |
 | Concurrency | Simultaneous bids, retry race, bid/extension/close race | Actual MySQL with independent connections and sessions |
-| Manual UI | RTL, images, wrong code, two browsers, connection loss, win/loss/no bids | Different accounts and browser sessions |
+| Browser user flows | RTL, images, wrong code, two browsers, connection loss, win/loss/no bids | Different accounts and browser sessions |
 | Privacy | Private item, image, assistant, and live-room access without a grant | API and browser tests |
-| Restart | Overdue closure recovery and persistent records/images | Docker restart and manual checks |
+| Restart | Overdue closure recovery and persistent records/images | Docker restart and browser checks |
 | Bank integration | Actual selected operation success, failure, timeout, and commitment effect | Provider sandbox after access; mock alone is insufficient |
 
-Feature tests run during implementation, not only in Weeks 11–12. Record commit, environment, steps, expected/actual result, tester, and pass/fail. Every test below starts Not Run; these are planned checks, not claimed results.
+Feature tests run during implementation, not only in Weeks 11–12. Record commit, environment, steps, expected/actual result, tester, and pass/fail. The following scenarios define the acceptance tests for implementation.
 
 ### Critical Acceptance Tests
 
@@ -808,13 +807,9 @@ Feature tests run during implementation, not only in Weeks 11–12. Record commi
 | QA16 | Seller tries bidding or client supplies owner/price/winner fields | Reject prohibited action/input; no artificial price change |
 | QA17 | Test all six assistant functions and admin monitoring | Required outputs exist, privacy holds, ADMIN-only monitoring, no decision-making assistant |
 
-Mermaid rendering checks verify diagram syntax only. MySQL execution and concurrency tests must verify the actual schema and auction logic during Stage 4. A valid diagram cannot prove that a bid transaction is correctly implemented.
+Mermaid rendering checks verify diagram syntax only. MySQL execution and concurrency tests must verify the actual schema and auction logic during implementation. Concurrency tests use independent database connections to verify transaction behavior.
 
-### Required Holberton Manual QA
-
-The task requires a Manual QA review request when the Stage 3 deliverable is ready. After team review, resolve or formally document the bank dependency with the mentor and check mockup agreement. Submit the repository/report link, commit version, Figma references, ERD, and API documentation through Holberton's review process. This review has not been requested or completed by this work.
-
-## 9. Technical Justifications and Mentor Feedback
+## 9. Technical Justifications
 
 ### Decisions and Their Requirements
 
@@ -834,43 +829,11 @@ The task requires a Manual QA review request when the Stage 3 deliverable is rea
 | Docker Compose | Shared app/database environment, service networking, and persistent volumes |
 | Task branches and reviewed PRs | Each member submits reviewable work and another member understands it before integration |
 | Mermaid and existing Figma mockups | Review technical diagram source in Git; retain screen/user-flow references |
-| Six rules/query-based assistant functions | Preserve Stage 2 functionality without external AI cost, predictions, or automated bidding decisions |
+| Six rules/query-based assistant functions | Support the required assistant functions without external AI cost, predictions, or automated bidding decisions |
 | Workflow ends at result | Preserve Charter scope without adding financial settlement or delivery infrastructure |
 
-### Team and Mentor Requirements
+## 10. Open Technical Dependencies
 
-| Requirement or feedback | Result in this proposal |
-|---|---|
-| Highest amount always wins | Automatic closing selects the highest recorded Bid; no human winner selector |
-| Preserve private auctions | PUBLIC/PRIVATE visibility, code hash, user–auction grant, and protected related data |
-| Halal-oriented mechanisms | Truthful asset information, stated rules, no seller self-bidding, fake bids, paid attempts, or invented financial flows |
-| Use tools the team understands | Flask/MySQL/HTML/CSS/JavaScript reflect team experience; each additional library needs a small working exercise |
-| Avoid tool overload | One application and one database; remove Redis, distributed cache, and microservices from this MVP |
-| Show who communicates with whom | Architecture arrows name HTTPS, SQL, and committed live updates; sequences show the actual save/close order |
-| Correct relationships and class names | Nine model/table names agree across classes, ERD, SQL, and API concepts |
-| Docker and member branches | Compose plan plus task branches, PR review, and integration process |
-| Required diagrams only | Exactly five Mermaid diagrams; other plans use tables/text |
-| Preserve stage continuity | Stage 2 controls product scope; changes simplify the technical implementation rather than replacing the project |
-| English repository work and clear commits | Report, schema comments, and diagram labels use English; commits have clear English titles without an extended description |
-
-These mechanisms support the team's stated requirements; they are not a formal religious approval of every contract detail. The team must understand why each tool is used, how a request travels, what is stored, and how a failure affects the workflow. Two members should be able to explain a new library before merging it.
-
-The first learning exercise should demonstrate two browsers, two bids, an auction-row lock, a late extension, and the automatic highest-bid result. Build the other screens around that working core. Novice scope reduces tool count and deployment complexity; it does not remove the need for correct timing and concurrency.
-
-## 10. Delivery Checklist — Task 6
-
-| Item | Actual status |
-|---|---|
-| Required documentation sections | Included: prioritized stories/mockups, architecture, components/classes/database, sequences, APIs, SCM/QA, justifications |
-| Charter continuity | Stage 2 requirement mapping and unchanged SMART milestones included; all six assistant functions are Must |
-| Technical diagrams | Five Mermaid source blocks; verify GitHub rendering after edits |
-| MySQL schema | Proposed nine-table schema.sql; not executed on a MySQL server in this work |
-| Camel and plate fields | Simple proposals documented for team/mockup review |
-| Bank API contract | Access and operation unavailable as confirmed on 10 October; real integration remains unresolved |
-| Deployment | Staging/production procedure planned; actual host not selected |
-| Implementation and runtime QA | Planned for Stage 4; no passing application tests claimed |
-| Holberton Manual QA | Required; not requested/completed here |
-
-The test repository retains the imported project and Git history. Stage 1 and Stage 2 are unchanged. The current Stage 3 proposal replaces the technical approach; earlier versions remain in Git history. Any future change to a required Charter feature must be a documented team/mentor scope decision rather than an undocumented omission.
-
-The timeline remains Stage 3 documentation in Weeks 4–5, Stage 4 development in Weeks 6–10, and Stage 5 testing/closure in Weeks 11–12. This report is ready for technical team review; unresolved external access is reported honestly, not filled with an invented API contract.
+- **Bank sandbox:** Access and the supported operation must be confirmed before defining the provider contract and enabling live Bid Commitment. The API returns `503 BANK_SANDBOX_NOT_CONFIGURED` until configuration is complete.
+- **Hosting:** The deployment host must support Docker, persistent storage, and HTTPS. Staging and production use separate data and secrets.
+- **Category details:** Camel and vehicle-plate fields are proposed and must match the listing screens before implementation.
