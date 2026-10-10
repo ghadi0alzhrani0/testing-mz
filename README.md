@@ -21,8 +21,6 @@ Stage 1 and Stage 2 are preserved as source history. Earlier payment, escrow, tr
 
 Each team member works in a task branch, opens a pull request, and has another member review it before integration. Docker Compose runs the application and database; GitHub stores and reviews the code.
 
-No runtime tests or Holberton Manual QA review have been completed for this proposal.
-
 ## Team
 
 - Ghadi Alzhrani
