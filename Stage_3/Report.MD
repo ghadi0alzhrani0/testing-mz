@@ -427,7 +427,7 @@ sequenceDiagram
   participant DB as PostgreSQL
   User->>UI: Enter amount and confirm
   UI->>API: POST /auctions/:id/bids
-  API->>DB: BEGIN; lock auction row FOR UPDATE
+  API->>DB: Begin transaction and lock auction row FOR UPDATE
   DB-->>API: Current auction state
   API->>DB: Read asset owner, access, commitment and last bid
   API->>API: Check request ID, ownership, access and deadline
@@ -453,7 +453,7 @@ sequenceDiagram
   participant DB as PostgreSQL
   User->>UI: Open auction after end time
   UI->>API: GET /auctions/:id
-  API->>DB: BEGIN; lock auction row FOR UPDATE
+  API->>DB: Begin transaction and lock auction row FOR UPDATE
   alt Result already recorded
     API->>DB: Read existing result
   else Auction has ended
